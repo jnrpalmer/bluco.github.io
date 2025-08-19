@@ -1,61 +1,71 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>bluco</title>
-  <style>
-    :root { --accent:#3b82f6; --bg:#0f172a; --text:#e5e7eb; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: system-ui, Arial, sans-serif; color:var(--text); background:var(--bg);}
-    header { padding:56px 24px; text-align:center; border-bottom:1px solid #1f2937; }
-    h1 { margin:0 0 8px; font-size:42px; letter-spacing:.5px; }
-    p.lead { opacity:.85; margin:0; }
-    nav { display:flex; gap:16px; justify-content:center; padding:14px 0 28px; }
-    nav a { color:var(--text); text-decoration:none; opacity:.85; }
-    nav a:hover { color:var(--accent); opacity:1; }
-    main { max-width:960px; margin:32px auto; padding:0 24px; line-height:1.7; }
-    .card { background:#111827; border:1px solid #1f2937; border-radius:12px; padding:20px; margin:16px 0; }
-    footer { text-align:center; padding:32px 24px; border-top:1px solid #1f2937; opacity:.7; }
-    .btn { display:inline-block; padding:10px 16px; border-radius:8px; border:1px solid #1f2937; text-decoration:none; color:var(--text);}
-    .btn:hover { border-color:var(--accent); color:var(--accent); }
-  </style>
+  <meta charset="UTF-8">
+  <title>Bluco Firebase Auth</title>
 </head>
 <body>
-  <header>
-    <h1>Hi, I’m jnrpalmer 👋</h1>
-    <p class="lead">Designer / Creator — welcome to my corner of the internet.</p>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a class="btn" href="#0205429571">Work with me</a>
-  </header>
+  <h1>Welcome to Bluco Website</h1>
 
-  <main>
-    <section id="about" class="card">
-      <h2>About</h2>
-      <p>Short bio goes here. What you do, what you love, and what people can expect from your work.</p>
-    </section>
+  <h2>Register</h2>
+  <input type="email" id="regEmail" placeholder="Enter Email"><br><br>
+  <input type="password" id="regPassword" placeholder="Enter Password"><br><br>
+  <button onclick="register()">Register</button>
 
-    <section id="projects" class="card">
-      <h2>Projects</h2>
-      <ul>
-        <li><strong>Project A</strong> — one sentence about what it is and why it’s cool.</li>
-        <li><strong>Project B</strong> — another quick highlight.</li>
-      </ul>
-    </section>
+  <h2>Login</h2>
+  <input type="email" id="email" placeholder="Enter Email"><br><br>
+  <input type="password" id="password" placeholder="Enter Password"><br><br>
+  <button onclick="login()">Login</button>
 
-    <section id="contact" class="card">
-      <h2>Contact</h2>
-      <p>Email: <a href="mailto:kobbiekyei423@gmail.com">kobbiekyei423@gmail.com</a></p>
-      <p>Instagram / X / LinkedIn links here.</p>
-    </section>
-  </main>
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  <footer>© <span id="y"></span> bluco. All rights reserved.</footer>
-  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+    // Your Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDvDVg4nYuCGZSkkdQioeeVsArM5j-qpq0",
+      authDomain: "jnr-website-4069e.firebaseapp.com",
+      projectId: "jnr-website-4069e",
+      storageBucket: "jnr-website-4069e.firebasestorage.app",
+      messagingSenderId: "757958019023",
+      appId: "1:757958019023:web:7d78bc1bcc1211f538b4ba",
+      measurementId: "G-E1KB3FX6YJ"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Register function
+    window.register = function() {
+      const email = document.getElementById("regEmail").value;
+      const password = document.getElementById("regPassword").value;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Registration successful! ✅");
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
+    }
+
+    // Login function
+    window.login = function() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          alert("Login successful! 🎉");
+          // Optional: redirect to another page after login
+          // window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
+    }
+  </script>
 </body>
 </html>
-
